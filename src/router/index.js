@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -12,9 +11,27 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      component: () => import('../views/AboutView.vue')
+      component: () => import('@/views/AboutView.vue')
+    },
+    {
+      path: '/404',
+      name: 'not-found',
+      component: () => import('@/views/NotFound.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'catch-all',
+      beforeEnter: (to, from, next) => {
+        next({name: 'not-found'})
+      }
     }
-  ]
+  ],
+  history: createWebHistory(import.meta.env.BASE_URL),
+  scrollBehavior(to) {
+    return to.hash
+      ? {el: to.hash, behavior: 'smooth'}
+      : { top: 0, behavior: 'smooth' }
+  }
 })
 
 export default router
