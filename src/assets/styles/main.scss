@@ -1,0 +1,12 @@
+@import "setup", "base", "blocks";
+
+.foo {
+  color: blue;
+  &__bar {
+    color: $primaryColor;
+
+    @media (max-width: $--tablet) {
+      color: green;
+    }
+  }
+}

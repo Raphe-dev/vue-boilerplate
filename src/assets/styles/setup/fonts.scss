@@ -1,0 +1,15 @@
+/*
+  @font-face {
+    font-family: 'Nexa Heavy';
+    font-weight: 400;
+    src: url('@/assets/fonts/Nexa-Heavy.ttf') format('truetype');
+  }
+*/
+@mixin font-default {
+  font-family: 'Roboto', sans-serif;
+}
+
+@mixin font-secondary {
+  font-family: 'Arial', sans-serif;
+}
+
