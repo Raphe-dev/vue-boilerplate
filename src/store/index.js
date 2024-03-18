@@ -1,4 +1,4 @@
-import { ref, reactive } from 'vue';
+import { reactive } from 'vue';
 
 import http from "@/extensions/http";
 import toDict from '@/helpers/dict.js'
@@ -7,6 +7,23 @@ import toDict from '@/helpers/dict.js'
 const state = reactive({
     pages: {}
 });
+
+const actions = {
+    async fetchPages() {
+        return await http.get('/pages').then(response => {
+            mutations.setPages(response.data.data)
+        })
+    },
+
+    async fetchSingleTypes(types = []) {
+        types.forEach(async (type) => {
+            await http.get(`${type}?populate=*`).then(response => {
+                mutations.setSingleType(response.data.data, type)
+            })
+        })
+        return;
+    }
+}
 
 const mutations = {
     setPages(data) {
@@ -28,19 +45,6 @@ const mutations = {
 const getters = {
 };
 
-const actions = {
-    async fetchPages() {
-        return await http.get('/pages').then(response => {
-            mutations.setPages(response.data.data)
-        })
-    },
-
-    async fetchSingleTypes() {
-        return await http.get('faq?populate=*').then(response => {
-            mutations.setSingleType(response.data.data, 'faq')
-        })
-    }
-}
 
 export default {
         state,
